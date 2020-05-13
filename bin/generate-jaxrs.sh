@@ -13,7 +13,7 @@ compile() {
     --support-package "${APP_PACKAGE}".generated.support 2>&1
 }
 
-./install-raml2jaxrs.sh
+.tools/bin/install-raml2jaxrs.sh
 
 echo "${C_BLUE}Generating JaxRS Java Code${C_NONE}"
 rm -rf "src/main/java/$(echo "${APP_PACKAGE}" | sed 's/\./\//g')/generated"
