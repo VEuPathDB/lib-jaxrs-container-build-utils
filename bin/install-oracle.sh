@@ -3,7 +3,7 @@
 # Don't run this in docker
 [ "${DOCKER}" = "build" ] && exit 0
 
-. bin/lib/colors.sh
+. .tools/bin/lib/colors.sh
 readonly LIBS="ojdbc8.jar
   ucp.jar
   xstreams.jar"

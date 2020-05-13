@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+. .tools/bin/lib/colors.sh
+
 set -eu
 
 mkdir -p docs/raml

@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-. bin/lib/colors.sh
+. .tools/bin/lib/colors.sh
 readonly LIBS="vendor/fgputil-accountdb-1.0.0.jar
   vendor/fgputil-util-1.0.0.jar"
 

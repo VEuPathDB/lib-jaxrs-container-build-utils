@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-. bin/lib/colors.sh
+. .tools/bin/lib/colors.sh
 
 readonly DEPS="raml2html:raml2html"
 

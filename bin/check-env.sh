@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-. bin/lib/colors.sh
+. .tools/bin/lib/colors.sh
 readonly ERROR="${C_RED}[ERROR]${C_NONE} "
 readonly  WARN="${C_YELLOW}[WARN ]${C_NONE} "
 OK=true

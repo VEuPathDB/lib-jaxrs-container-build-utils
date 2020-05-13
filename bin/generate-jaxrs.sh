@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-. bin/lib/colors.sh
+. .tools/bin/lib/colors.sh
 
 APP_PACKAGE=${1:?Missing required application package param}
 
