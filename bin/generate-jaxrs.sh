@@ -19,9 +19,11 @@ echo "${C_BLUE}Generating JaxRS Java Code${C_NONE}"
 rm -rf "src/main/java/$(echo "${APP_PACKAGE}" | sed 's/\./\//g')/generated"
 
 out="$(compile)"
+foo=$?
 
-if [ $? -gt 0 ]; then
+echo "${out}" | sed 's/^/  /'
+
+if [ $foo -gt 0 ]; then
   exit 1
 fi
 
-echo "${out}" | sed 's/^/  /'
