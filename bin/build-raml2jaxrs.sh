@@ -9,9 +9,11 @@ git clone \
 
 curDir=$(pwd)
 
-cd tmp/raml/raml-to-jaxrs/raml-to-jaxrs-cli || exit 1
-echo "Correcting pom.xml"
-sed -i 's/3.0.5-SNAPSHOT/3.0.5/' pom.xml
+cd tmp/raml/ || exit 1
+for i in $(find -name pom.xml); do
+  echo "Correcting ${i}"
+  sed -i 's/3.0.5-SNAPSHOT/3.0.5/' $i
+done
 
 echo "Running maven build"
 mvn clean install || exit 1
