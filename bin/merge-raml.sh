@@ -17,5 +17,5 @@ echo "#%RAML 1.0 Library
 
 types:" > schema/library.raml
 
-find docs/schema -name '*.raml' | xargs -I '{}' sed 's/#.\+\|^types.\+//' {} | grep -vE "^ *$" >> schema/library.raml
+find schema -name '*.raml' | xargs -I '{}' sed 's/#.\+\|^types.\+//' {} | grep -vE "^ *$" >> schema/library.raml
 
