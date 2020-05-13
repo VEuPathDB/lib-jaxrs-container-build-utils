@@ -4,8 +4,6 @@
 
 set -eu
 
-mkdir -p docs/raml
-
 echo "${C_BLUE}Merging Raml Schema${C_NONE}"
 
 echo "#%RAML 1.0 Library
@@ -17,7 +15,7 @@ echo "#%RAML 1.0 Library
 #                                                                              #
 ################################################################################
 
-types:" > docs/lib/library.raml
+types:" > schema/library.raml
 
 find docs/schema -name '*.raml' | xargs -I '{}' sed 's/#.\+\|^types.\+//' {} | grep -vE "^ *$" >> schema/library.raml
 
