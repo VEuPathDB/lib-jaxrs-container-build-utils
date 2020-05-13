@@ -20,8 +20,8 @@ rm -rf "src/main/java/$(echo "${APP_PACKAGE}" | sed 's/\./\//g')/generated"
 
 out="$(compile)"
 
-if [ $? -gt 0 ]; then {
+if [ $? -gt 0 ]; then
   exit 1
-}
+fi
 
 echo "${out}" | sed 's/^/  /'
