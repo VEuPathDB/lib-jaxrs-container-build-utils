@@ -15,6 +15,7 @@ for i in $(find -name pom.xml); do
   sed -i 's/3.0.5-SNAPSHOT/3.0.5/' $i
 done
 
+cd raml-to-jaxrs/raml-to-jaxrs-cli
 echo "Running maven build"
 mvn clean install || exit 1
 mv target/raml-to-jaxrs-cli-3.0.5-jar-with-dependencies.jar "${curDir}"/.tools/bin/raml-to-jaxrs.jar
