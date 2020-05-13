@@ -8,5 +8,5 @@ echo "${C_BLUE}Checking for FgpUtil libraries${C_NONE}"
 
 if ! stat ${LIBS} > /dev/null 2>&1; then
   echo "${C_CYAN}  Not found.  Installing${C_NONE}"
-  bin/build-fgputil.sh 2>&1 | sed 's/^/  /'
+  ./tool/bin/build-fgputil.sh 2>&1 | sed 's/^/  /'
 fi
