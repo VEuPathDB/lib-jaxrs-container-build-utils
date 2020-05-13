@@ -5,7 +5,7 @@
 APP_PACKAGE=${1:?Missing required application package param}
 
 compile() {
-  java -jar bin/raml-to-jaxrs.jar docs/lib/full-api.raml \
+  java -jar bin/raml-to-jaxrs.jar .tools/raml/full-api.raml \
     --directory src/main/java \
     --generate-types-with jackson \
     --model-package "${APP_PACKAGE}".generated.model \
