@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-. .tools/lib/colors.sh
+. .tools/bin/lib/colors.sh
 
 
 set -eu
