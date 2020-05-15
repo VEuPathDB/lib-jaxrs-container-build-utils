@@ -14,7 +14,7 @@ if [ -f ".tools/bin/merge-raml" ]; then
   tmp=$(.tools/bin/fetch-latest.sh "${TOOL}" "-1")
   ret=$?
 
-  echo tmp | sed 's/^/  /'
+  echo "${tmp}" | sed 's/^/  /'
 
   if [ $ret -gt 0 ]; then
     echo "  ${C_RED}UPDATE FAILED${C_NONE}" >&2
@@ -30,7 +30,7 @@ else
   tmp=$(.tools/bin/fetch-latest.sh "${TOOL}" "-1")
   ret=$?
 
-  echo tmp | sed 's/^/  /'
+  echo "${tmp}" | sed 's/^/  /'
 
   if [ $ret -gt 0 ]; then
     echo "  ${C_RED}DOWNLOAD FAILED${C_NONE}" >&2
