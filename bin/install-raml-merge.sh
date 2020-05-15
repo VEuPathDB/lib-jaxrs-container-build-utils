@@ -25,5 +25,8 @@ else
   if ! .tools/bin/fetch-latest.sh "${TOOL}" "-1"; then
     echo "  ${C_RED}DOWNLOAD FAILED${C_NONE}" >&2
     exit 1
+  else
+    mv "merge-raml" ".tools/bin/merge-raml"
+    echo "  ${C_CYAN}Downloaded version $(.tools/bin/merge-raml -V)${C_NONE}"
   fi
 fi
