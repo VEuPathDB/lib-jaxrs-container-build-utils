@@ -3,7 +3,7 @@ trap "exit 1" TERM
 export TOP_PID=$$
 
 readonly PATH=".tools/bin"
-readinly TOOL="${PATH}/gh-latest"
+readonly TOOL="${PATH}/gh-latest"
 
 getTool() {
   if [ ! -f "${TOOL}" ]; then
