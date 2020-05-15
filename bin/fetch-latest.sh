@@ -10,7 +10,7 @@ getTool() {
     /bin/wget "https://github.com/Foxcapades/gh-latest/releases/download/v1.0.4/gh-latest-$(os).v1.0.4.tar.gz" -O "${PATH}/tmp.tar.gz"
     tar -xvf "${PATH}/tmp.tar.gz" -C "${PATH}"
     rm "${PATH}/tmp.tar.gz"
-    chmod +x ${TOOL}
+    chmod 754 ${TOOL}
   fi
 }
 
