@@ -11,7 +11,7 @@ if [ -f ".tools/bin/merge-raml" ]; then
   echo "  ${C_CYAN}Found version ${cur}${C_NONE}"
   echo "  ${C_CYAN}Checking for updates${C_NONE}"
 
-  if ! ./tools/bin/fetch-latest.sh "${TOOL}" "${cur}"; then
+  if ! .tools/bin/fetch-latest.sh "${TOOL}" "${cur}"; then
     echo "  ${C_RED}UPDATE FAILED${C_NONE}" >2
   elif [ -f "merge-raml" ]; then
     mv "merge-raml" ".tools/bin/merge-raml"
@@ -22,7 +22,7 @@ if [ -f ".tools/bin/merge-raml" ]; then
 else
   echo "  ${C_CYAN}Downloading RAML merge tool${C_NONE}"
 
-  if ! ./tools/bin/fetch-latest.sh "${TOOL}" "-1"; then
+  if ! .tools/bin/fetch-latest.sh "${TOOL}" "-1"; then
     echo "  ${C_RED}DOWNLOAD FAILED${C_NONE}" >2
     exit 1
   fi
