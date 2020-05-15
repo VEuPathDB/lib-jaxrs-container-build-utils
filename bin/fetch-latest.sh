@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 trap "exit 1" TERM
 export TOP_PID=$$
 
