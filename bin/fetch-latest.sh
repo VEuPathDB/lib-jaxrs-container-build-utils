@@ -7,7 +7,7 @@ readonly TOOL="${PATH}/gh-latest"
 
 getTool() {
   if [ ! -f "${TOOL}" ]; then
-    wget "https://github.com/Foxcapades/gh-latest/releases/download/v1.0.4/gh-latest-$(os).v1.0.4.tar.gz" -O "${TOOL}"
+    /bin/wget "https://github.com/Foxcapades/gh-latest/releases/download/v1.0.4/gh-latest-$(os).v1.0.4.tar.gz" -O "${TOOL}"
   fi
 }
 
@@ -34,7 +34,7 @@ parseReleaseFile() {
 }
 
 os() {
-  OSTYPE="$(uname)"
+  OSTYPE="$(/bin/uname)"
   if [ "$OSTYPE" = "Linux" ]; then
     echo "linux"
   elif [ "$OSTYPE" = "darwin" ]; then
