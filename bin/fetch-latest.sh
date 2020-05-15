@@ -7,7 +7,9 @@ readonly TOOL="${PATH}/gh-latest"
 
 getTool() {
   if [ ! -f "${TOOL}" ]; then
-    /bin/wget "https://github.com/Foxcapades/gh-latest/releases/download/v1.0.4/gh-latest-$(os).v1.0.4.tar.gz" -O "${TOOL}"
+    /bin/wget "https://github.com/Foxcapades/gh-latest/releases/download/v1.0.4/gh-latest-$(os).v1.0.4.tar.gz" -O "${PATH}/tmp.tar.gz"
+    /bin/tar -xvf "${}"
+
   fi
 }
 

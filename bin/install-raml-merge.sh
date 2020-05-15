@@ -22,7 +22,12 @@ if [ -f ".tools/bin/merge-raml" ]; then
 else
   echo "  ${C_CYAN}Downloading RAML merge tool${C_NONE}"
 
-  if ! .tools/bin/fetch-latest.sh "${TOOL}" "-1"; then
+  tmp=$(.tools/bin/fetch-latest.sh "${TOOL}" "-1")
+  ret=$?
+
+  echo tmp | sed 's/^/  /'
+
+  if [ $ret -gt 0 ]; then
     echo "  ${C_RED}DOWNLOAD FAILED${C_NONE}" >&2
     exit 1
   else
