@@ -2,15 +2,19 @@
 trap "exit 1" TERM
 export TOP_PID=$$
 
-readonly PATH=".tools/bin"
-readonly TOOL="${PATH}/gh-latest"
+readonly CUR_PATH="$(pwd)/.tools/bin"
+readonly TOOL="${CUR_PATH}/gh-latest"
 
 getTool() {
   if [ ! -f "${TOOL}" ]; then
-    (/bin/wget "https://github.com/Foxcapades/gh-latest/releases/download/v1.0.4/gh-latest-$(os).v1.0.4.tar.gz" -O "${PATH}/tmp.tar.gz" \
-    && /bin/tar -xvf "${PATH}/tmp.tar.gz" -C "${PATH}" \
-    && /bin/rm "${PATH}/tmp.tar.gz" \
-    && /bin/chmod 754 ${TOOL}) || kill -s TERM ${TOP_PID}
+    file="${CUR_PATH}/tmp.tar.gz"
+
+    (echo "Downloading gh-latest" \
+      && wget -q "https://github.com/Foxcapades/gh-latest/releases/download/v1.0.4/gh-latest-$(os).v1.0.4.tar.gz" -O "${file}" 2>&1 \
+      && echo "Extracting ${file}" \
+      && tar -xzf "${file}" -C "${CUR_PATH}" 2>&1 \
+      && echo "Cleaning up" \
+      && rm "${file}" 2>&1) || kill -s TERM ${TOP_PID}
   fi
 }
 
@@ -22,7 +26,7 @@ getLatestVersionData() {
   fi
 
   if ! "${TOOL}" -t "${1}"; then
-    echo "Failed to fetch version information from ${fullUrl}" >&2
+    echo "Failed to fetch version information for ${1}" >&2
     kill -s TERM ${TOP_PID}
   fi
 }
@@ -80,9 +84,12 @@ downloadIfDifferent() {
     kill -s TERM ${TOP_PID}
   fi
 
-  fileName="$(basename "${fileUrl}")"
-
-  wget -q "${fileUrl}" && tar -xzf "${fileName}" && rm "${fileName}"
+  echo "Downloading ${fileUrl}" \
+    && wget -q "${fileUrl}" -O "${CUR_PATH}/tmp.tar.gz" 2>&1 \
+    && echo "Extracting ${CUR_PATH}/tmp.tar.gz" \
+    && tar -xf "${CUR_PATH}/tmp.tar.gz" -C ${CUR_PATH} 2>&1 \
+    && echo "Cleaning up" \
+    && /usr/bin/rm "${CUR_PATH}/tmp.tar.gz"
 }
 
 getTool
