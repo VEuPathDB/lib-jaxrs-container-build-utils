@@ -2,17 +2,13 @@
 trap "exit 1" TERM
 export TOP_PID=$$
 
-readonly GITHUB_API_URL="https://api.github.com/repos/"
-readonly GITHUB_TARGET="/releases/latest"
+readonly PATH=".tools/bin"
+readinly TOOL="${PATH}/gh-latest"
 
-makeGhApiUrl() {
-  if [ -z "${1}" ]; then
-    echo "function makeGhApiUrl called without required project slug parameter.
-    Example call: 'makeGhApiUrl Foxcapades/Argonaut'" >&2
-    kill -s TERM ${TOP_PID}
+getTool() {
+  if [ ! -f "${TOOL}" ]; then
+    wget "https://github.com/Foxcapades/gh-latest/releases/download/v1.0.4/gh-latest-$(os).v1.0.4.tar.gz" -O "${TOOL}"
   fi
-
-  echo "${GITHUB_API_URL}${1}${GITHUB_TARGET}"
 }
 
 getLatestVersionData() {
@@ -22,20 +18,10 @@ getLatestVersionData() {
     kill -s TERM ${TOP_PID}
   fi
 
-  fullUrl="$(makeGhApiUrl "${1}")"
-  if ! curl -sf "${fullUrl}"; then
+  if ! "${TOOL}" -t "${1}"; then
     echo "Failed to fetch version information from ${fullUrl}" >&2
     kill -s TERM ${TOP_PID}
   fi
-}
-
-parseVersionNumber() {
-  if [ -z "${1}" ]; then
-    echo "function parseVersionNumber called without required project release data." >&2
-    kill -s TERM ${TOP_PID}
-  fi
-
-  echo "${1}" | grep "tag_name" | cut -d '"' -f 4
 }
 
 parseReleaseFile() {
@@ -44,7 +30,7 @@ parseReleaseFile() {
     kill -s TERM ${TOP_PID}
   fi
 
-  echo "${1}" | grep "browser_download_url" | grep "$(os)" | cut -d '"' -f 4
+  "${TOOL}" -u "${1}" | grep "$(os)"
 }
 
 os() {
@@ -79,23 +65,13 @@ downloadIfDifferent() {
     kill -s TERM ${TOP_PID}
   fi
 
-  json="$(getLatestVersionData "${1}")"
-  if [ -z "${json}" ]; then
-    echo "empty github response"
-    kill -s TERM ${TOP_PID}
-  fi
-
-  vn="$(parseVersionNumber "${json}")"
-  if [ -z "${vn}" ]; then
-    echo "failed to parse version number from github response json" >&2
-    kill -s TERM ${TOP_PID}
-  fi
+  vn="$(getLatestVersionData "${1}")"
 
   if versionEquals "${vn}" "${2}"; then
     return 0
   fi
 
-  fileUrl="$(parseReleaseFile "${json}")"
+  fileUrl="$(parseReleaseFile "${1}")"
   if [ -z "${fileUrl}" ]; then
     echo "failed to parse release file name from github response json" >&2
     kill -s TERM ${TOP_PID}
@@ -106,4 +82,5 @@ downloadIfDifferent() {
   wget -q "${fileUrl}" && tar -xzf "${fileName}" && rm "${fileName}"
 }
 
+getTool
 downloadIfDifferent "${1:?Package Name}" "${2:-"-1"}"
