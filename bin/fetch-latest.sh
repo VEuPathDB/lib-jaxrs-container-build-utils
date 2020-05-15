@@ -7,10 +7,10 @@ readonly TOOL="${PATH}/gh-latest"
 
 getTool() {
   if [ ! -f "${TOOL}" ]; then
-    /bin/wget "https://github.com/Foxcapades/gh-latest/releases/download/v1.0.4/gh-latest-$(os).v1.0.4.tar.gz" -O "${PATH}/tmp.tar.gz"
-    /bin/tar -xvf "${PATH}/tmp.tar.gz" -C "${PATH}"
-    /bin/rm "${PATH}/tmp.tar.gz"
-    /bin/chmod 754 ${TOOL}
+    (/bin/wget "https://github.com/Foxcapades/gh-latest/releases/download/v1.0.4/gh-latest-$(os).v1.0.4.tar.gz" -O "${PATH}/tmp.tar.gz" \
+    && /bin/tar -xvf "${PATH}/tmp.tar.gz" -C "${PATH}" \
+    && /bin/rm "${PATH}/tmp.tar.gz" \
+    && /bin/chmod 754 ${TOOL}) || kill -s TERM ${TOP_PID}
   fi
 }
 
