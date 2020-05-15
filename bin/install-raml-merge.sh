@@ -11,7 +11,12 @@ if [ -f ".tools/bin/merge-raml" ]; then
   echo "  ${C_CYAN}Found version ${cur}${C_NONE}"
   echo "  ${C_CYAN}Checking for updates${C_NONE}"
 
-  if ! .tools/bin/fetch-latest.sh "${TOOL}" "${cur}"; then
+  tmp=$(.tools/bin/fetch-latest.sh "${TOOL}" "-1")
+  ret=$?
+
+  echo tmp | sed 's/^/  /'
+
+  if [ $ret -gt 0 ]; then
     echo "  ${C_RED}UPDATE FAILED${C_NONE}" >&2
   elif [ -f "merge-raml" ]; then
     mv "merge-raml" ".tools/bin/merge-raml"
