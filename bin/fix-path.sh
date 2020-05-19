@@ -14,6 +14,5 @@ fi
 echo "${C_BLUE}Moving Files${C_NONE}"
 
 mkdir -p ${new}
-mv -t "${new}" "${old}/*"
-mv -t "${new}" "${old}/*"
+mv -t "${new}" ${old}/*
 rm -rf "${old}"
