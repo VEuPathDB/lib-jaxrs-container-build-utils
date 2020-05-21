@@ -14,14 +14,12 @@ echo "Building FgpUtil"
 
 mvn clean install 2>&1 || exit 1
 
-if [ "${docker}" = "docker" ]; then
-  cp Util/target/fgputil-util-1.0.0.jar "${dir}/fgputil-util-1.0.0.jar"
-  cp AccountDB/target/fgputil-accountdb-1.0.0.jar "${dir}/fgputil-accountdb-1.0.0.jar"
-else
-  mkdir -p "${dir}/vendor"
-  cp Util/target/fgputil-util-1.0.0.jar "${dir}/vendor/fgputil-util-1.0.0.jar"
-  cp AccountDB/target/fgputil-accountdb-1.0.0.jar "${dir}/vendor/fgputil-accountdb-1.0.0.jar"
-fi
+mkdir -p "${dir}/vendor"
+cp -t "${dir}/vendor" \
+  AccountDB/target/fgputil-accountdb-1.0.0.jar \
+  Core/target/fgputil-core-1.0.0.jar \
+  DB/target/fgputil-db-1.0.0.jar \
+  Web/target/fgputil-web-1.0.0.jar
 
 cd "${dir}"
 rm -rf FgpUtil

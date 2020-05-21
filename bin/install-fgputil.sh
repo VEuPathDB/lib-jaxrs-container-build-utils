@@ -2,7 +2,9 @@
 
 . .tools/bin/lib/colors.sh
 readonly LIBS="vendor/fgputil-accountdb-1.0.0.jar
-  vendor/fgputil-util-1.0.0.jar"
+  vendor/fgputil-core-1.0.0.jar
+  vendor/fgputil-db-1.0.0.jar
+  vendor/fgputil-web-1.0.0.jar"
 
 echo "${C_BLUE}Checking for FgpUtil libraries${C_NONE}"
 
