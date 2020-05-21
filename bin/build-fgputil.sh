@@ -18,7 +18,7 @@ mkdir -p "${dir}/vendor"
 cp -t "${dir}/vendor" \
   AccountDB/target/fgputil-accountdb-1.0.0.jar \
   Core/target/fgputil-core-1.0.0.jar \
-  DB/target/fgputil-db-1.0.0.jar \
+  Db/target/fgputil-db-1.0.0.jar \
   Web/target/fgputil-web-1.0.0.jar
 
 cd "${dir}"
