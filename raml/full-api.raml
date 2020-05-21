@@ -19,6 +19,7 @@ uses:
 /api:
   displayName: API Documentation
   get:
+    description: Renders the API documentation for this service.
     responses:
       200:
         body:
@@ -27,6 +28,7 @@ uses:
 /health:
   displayName: Health Check
   get:
+    description: Prints information about the overall service health.
     responses:
       200:
         body:
@@ -40,6 +42,7 @@ uses:
 /metrics:
   displayName: Service Metrics
   get:
+    description: Prometheus metrics for the service.
     responses:
       200:
         body:
