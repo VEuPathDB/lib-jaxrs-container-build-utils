@@ -12,11 +12,17 @@ types:
     displayName: 400 Response
     type: ErrorResponse
     discriminatorValue: bad-request
+    example:
+      status: bad-request
+      message: malformed JSON
 
   UnauthorizedError:
     displayName: 401 Response
     type: ErrorResponse
     discriminatorValue: unauthorized
+    example:
+      status: unauthorized
+      message: users must be logged in to access this resource
 
   InvalidInputError:
     displayName: 422 Response
@@ -33,6 +39,13 @@ types:
             properties:
               //:
                 type: string
+    example:
+      status: invalid-input
+      message: json validation failed
+      errors:
+        general: []
+        byKey:
+          datasetName: Dataset name is required
 
   ServerError:
     displayName: 500 Response
@@ -40,3 +53,7 @@ types:
     discriminatorValue: server-error
     properties:
       requestId: string
+    example:
+      status: server-error
+      message: Dataset handler connection lost
+      requestId: b296c3d9-4032-41b1-906e-c97ccfc447e3
