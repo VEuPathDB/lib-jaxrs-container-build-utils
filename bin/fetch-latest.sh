@@ -89,7 +89,7 @@ downloadIfDifferent() {
     && echo "Extracting ${CUR_PATH}/tmp.tar.gz" \
     && tar -xf "${CUR_PATH}/tmp.tar.gz" -C ${CUR_PATH} 2>&1 \
     && echo "Cleaning up" \
-    && /usr/bin/rm "${CUR_PATH}/tmp.tar.gz"
+    && rm "${CUR_PATH}/tmp.tar.gz"
 }
 
 getTool
