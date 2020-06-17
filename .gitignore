@@ -1,4 +1,6 @@
-*.jar
+.gradle/
+.idea/
+#*.jar
 
 bin/gh-latest
 bin/merge-raml
