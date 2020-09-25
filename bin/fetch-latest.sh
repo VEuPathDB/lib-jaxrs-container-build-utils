@@ -41,10 +41,10 @@ parseReleaseFile() {
 }
 
 os() {
-  OSTYPE="$(/bin/uname)"
+  OSTYPE="$(uname)"
   if [ "$OSTYPE" = "Linux" ]; then
     echo "linux"
-  elif [ "$OSTYPE" = "darwin" ]; then
+  elif [ "$OSTYPE" = "Darwin" ]; then
     echo "darwin"
   else
     echo "Unsupported OS: $OSTYPE" >&2
