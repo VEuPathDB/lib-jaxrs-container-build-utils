@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 
 echo "Cloning raml-for-jax-rs v3.0.5"
+rm -rf tmp/raml
 git clone \
   --branch 3.0.5 \
   --depth 1 \
