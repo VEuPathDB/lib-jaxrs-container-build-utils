@@ -12,8 +12,9 @@ curDir=$(pwd)
 
 cd tmp/raml/ || exit 1
 for pomfile in $(find . -name pom.xml); do
-  echo "Correcting ${i}"
-  sed -i 's/3.0.5-SNAPSHOT/3.0.5/' $pomfile
+  echo "Correcting ${pomfile}"
+  sed 's/3.0.5-SNAPSHOT/3.0.5/' $pomfile > ${pomfile}.tmp
+  mv ${pomfile}.tmp $pomfile
 done
 
 cd raml-to-jaxrs/raml-to-jaxrs-cli
