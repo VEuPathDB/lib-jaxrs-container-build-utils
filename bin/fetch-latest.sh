@@ -10,7 +10,7 @@ getTool() {
     file="${CUR_PATH}/tmp.tar.gz"
 
     (echo "Downloading gh-latest" \
-      && wget -q "https://github.com/Foxcapades/gh-latest/releases/download/v1.0.4/gh-latest-$(os).v1.0.4.tar.gz" -O "${file}" 2>&1 \
+      && curl -s -L "https://github.com/Foxcapades/gh-latest/releases/download/v1.0.4/gh-latest-$(os).v1.0.4.tar.gz" > "${file}" \
       && echo "Extracting ${file}" \
       && tar -xzf "${file}" -C "${CUR_PATH}" 2>&1 \
       && echo "Cleaning up" \
@@ -85,7 +85,7 @@ downloadIfDifferent() {
   fi
 
   echo "Downloading ${fileUrl}" \
-    && wget -q "${fileUrl}" -O "${CUR_PATH}/tmp.tar.gz" 2>&1 \
+    && curl -s -L "${fileUrl}" > "${CUR_PATH}/tmp.tar.gz" \
     && echo "Extracting ${CUR_PATH}/tmp.tar.gz" \
     && tar -xf "${CUR_PATH}/tmp.tar.gz" -C ${CUR_PATH} 2>&1 \
     && echo "Cleaning up" \
