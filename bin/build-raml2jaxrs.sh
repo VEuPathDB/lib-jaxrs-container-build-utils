@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-echo "Cloning raml-for-jax-rs v3.0.5"
+echo "Cloning raml-for-jax-rs v3.0.7"
 rm -rf tmp/raml
 git clone \
   --branch 3.0.7 \
@@ -13,7 +13,7 @@ curDir=$(pwd)
 cd tmp/raml/ || exit 1
 for pomfile in $(find . -name pom.xml); do
   echo "Correcting ${pomfile}"
-  sed 's/3.0.5-SNAPSHOT/3.0.5/' $pomfile > ${pomfile}.tmp
+  sed 's/3.0.6-SNAPSHOT/3.0.6/' $pomfile > ${pomfile}.tmp
   mv ${pomfile}.tmp $pomfile
 done
 
