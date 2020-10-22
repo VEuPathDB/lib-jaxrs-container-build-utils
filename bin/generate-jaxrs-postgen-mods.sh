@@ -45,7 +45,7 @@ for pair in $(grep -irn 'String _DISCRIMINATOR_TYPE_NAME =' "${appPackageLocatio
   # to the form that raml-to-jaxrs will have used as the enum value name.
   newVal="$(sed -n "${iline}p" "${iface}" \
     | cut -d'"' -f2 \
-    | sed "s#\W#_#g" \
+    | sed "s#\W##g" \
     | tr "[:lower:]" "[:upper:]")"
 
   # Replace the definition line in the interface with a form actually using the
