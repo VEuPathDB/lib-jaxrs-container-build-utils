@@ -3,7 +3,7 @@
 echo "Cloning raml-for-jax-rs v3.0.5"
 rm -rf tmp/raml
 git clone \
-  --branch 3.0.5 \
+  --branch 3.0.7 \
   --depth 1 \
   --quiet \
   https://github.com/mulesoft-labs/raml-for-jax-rs.git tmp/raml || exit 1
