@@ -41,16 +41,21 @@ for pair in $(grep -irn 'String _DISCRIMINATOR_TYPE_NAME =' "${appPackageLocatio
     continue
   fi
 
+  base="$(basename "${iface}" | cut -d. -f1)"
+
   # Parse the string value of the interface constant declaration and convert it
   # to the form that raml-to-jaxrs will have used as the enum value name.
-  newVal="$(sed -n "${iline}p" "${iface}" \
-    | cut -d'"' -f2 \
-    | sed "s#\W##g" \
-    | tr "[:lower:]" "[:upper:]")"
+  newValRaw="$(sed -n "${iline}p" "${iface}" | cut -d'"' -f2)"
+
+  if [ "${base}" = "${newValRaw}" ]; then
+    newVal="null"
+  else
+    newVal="${type}.$(echo "${number}" | sed "s#\W##g" | tr "[:lower:]" "[:upper:]")"
+  fi
 
   # Replace the definition line in the interface with a form actually using the
   # enum type rather than string.
-  sed "${iline}s#.\+#  ${type} _DISCRIMINATOR_TYPE_NAME = ${type}.${newVal};#" $iface > tmp.java
+  sed "${iline}s#.\+#  ${type} _DISCRIMINATOR_TYPE_NAME = ${newVal};#" $iface > tmp.java
 
   # Move the edited form of the file over the original file.
   mv tmp.java ${iface}
