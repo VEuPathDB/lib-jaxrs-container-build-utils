@@ -13,7 +13,7 @@ curDir=$(pwd)
 cd tmp/raml/ || exit 1
 for pomfile in $(find . -name pom.xml); do
   echo "Correcting ${pomfile}"
-  sed 's/3\.0\.\d-SNAPSHOT/3.0.7/' $pomfile > ${pomfile}.tmp
+  sed 's/3.0.[0-9]-SNAPSHOT/3.0.7/' $pomfile > ${pomfile}.tmp
   mv ${pomfile}.tmp $pomfile
 done
 
