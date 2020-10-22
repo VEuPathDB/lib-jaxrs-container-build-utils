@@ -41,12 +41,16 @@ for pair in $(grep -irn 'String _DISCRIMINATOR_TYPE_NAME =' "${appPackageLocatio
     continue
   fi
 
+  # Get the name of the java interface.
   base="$(basename "${iface}" | cut -d. -f1)"
 
   # Parse the string value of the interface constant declaration and convert it
   # to the form that raml-to-jaxrs will have used as the enum value name.
   newValRaw="$(sed -n "${iline}p" "${iface}" | cut -d'"' -f2)"
 
+  # If the interface name equals the raw string value for the discriminator,
+  # then it's a base type and does not have a valid discriminator value.  Set it
+  # to null instead.
   if [ "${base}" = "${newValRaw}" ]; then
     newVal="null"
   else
