@@ -50,7 +50,7 @@ for pair in $(grep -irn 'String _DISCRIMINATOR_TYPE_NAME =' "${appPackageLocatio
   if [ "${base}" = "${newValRaw}" ]; then
     newVal="null"
   else
-    newVal="${type}.$(echo "${number}" | sed "s#\W##g" | tr "[:lower:]" "[:upper:]")"
+    newVal="${type}.$(echo "${newValRaw}" | sed "s#\W##g" | tr "[:lower:]" "[:upper:]")"
   fi
 
   # Replace the definition line in the interface with a form actually using the
