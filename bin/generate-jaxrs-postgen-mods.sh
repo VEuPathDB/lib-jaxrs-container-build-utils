@@ -51,7 +51,7 @@ for pair in $(grep -irn 'String _DISCRIMINATOR_TYPE_NAME =' "${appPackageLocatio
   # If the interface name equals the raw string value for the discriminator,
   # then it's a base type and does not have a valid discriminator value.  Set it
   # to null instead.
-  baseComparison="$(echo "$newValRaw" | sed "s#_##g")"] # class name generation removes underscores
+  baseComparison="$(echo "$newValRaw" | sed "s#_##g")" # class name generation removes underscores
   if [ "${base}" = "${baseComparison}" ]; then
     newVal="null"
   else
