@@ -6,7 +6,7 @@ dir=$(pwd)
 echo "Cloning latest FgpUtil version"
 
 git clone \
-  --branch jdk15
+  --branch jdk15 \
   --depth 1 \
   https://github.com/VEuPathDB/FgpUtil || exit 1
 cd FgpUtil
