@@ -10,7 +10,7 @@ cd FgpUtil
 
 echo "Building FgpUtil"
 
-mvn clean install -DskipTests=true 2>&1 || exit 1
+mvn clean install 2>&1 || exit 1
 
 mkdir -p "${dir}/vendor"
 cp \
