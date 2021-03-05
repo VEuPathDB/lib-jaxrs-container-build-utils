@@ -17,6 +17,7 @@ cp \
   AccountDB/target/fgputil-accountdb-1.0.0.jar \
   Cache/target/fgputil-cache-1.0.0.jar \
   Cli/target/fgputil-cli-1.0.0.jar \
+  Client/target/fgputil-client-1.0.0.jar \
   Core/target/fgputil-core-1.0.0.jar \
   Db/target/fgputil-db-1.0.0.jar \
   Events/target/fgputil-events-1.0.0.jar \
