@@ -69,3 +69,15 @@ for pair in $(grep -irn 'String _DISCRIMINATOR_TYPE_NAME =' "${appPackageLocatio
 done
 
 echo "  Modified $counter generated Java files to use enum discriminator types";
+
+# Reset update counter
+counter=0
+
+# Iterate over all generated enums and add a getter for the enum's name
+for file in $(grep -irn "public enum" "${appPackageLocation}" | grep '.java' | awk -F: '{ print $1 }'); do
+  sed 's/^\}$/  public String getValue\(\)\{ return name; \} }/' $file > tmp.java
+  mv tmp.java $file
+  counter=$(($counter+1))
+done
+
+echo "  Modified $counter generated Java enums to provide a getter for the enum's JSON value";
