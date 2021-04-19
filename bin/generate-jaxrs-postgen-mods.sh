@@ -74,10 +74,10 @@ echo "  Modified $counter generated Java files to use enum discriminator types";
 counter=0
 
 # Iterate over all generated enums and add a getter for the enum's name
-for file in $(grep -irn "public enum" "${appPackageLocation}" | grep '.java' | awk -F: '{ print $1 }'); do
-  sed 's/^\}$/  public String getValue\(\)\{ return name; \} }/' $file > tmp.java
+for file in $(grep -irn "enum" "${appPackageLocation}" | grep '.java' | grep -v 'Impl.java' | awk -F: '{ print $1 }' | sort -u); do
+  awk 'BEGIN {RS="enum" ; ORS = "enum"} {if ($0 ~ /private String name/) {print gensub(/}/, "  public String getValue(){ return name; } \n}", 2)} else {print}}' $file | sed 's/^enum$//g' > tmp.java
   mv tmp.java $file
   counter=$(($counter+1))
 done
 
-echo "  Modified $counter generated Java enums to provide a getter for the enum's JSON value";
+echo "  Modified $counter generated Java files to provide a getter for the enum's JSON value";
