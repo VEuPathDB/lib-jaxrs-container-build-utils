@@ -21,7 +21,7 @@ counter=0
 # names.
 for pair in $(grep -irn 'String _DISCRIMINATOR_TYPE_NAME =' "${appPackageLocation}" \
   | grep '.java' \
-  | awk '{ o = $1; gsub(/\.java/, "Impl.java", $1); print o ":" $1 }' \
+  | gawk '{ o = $1; gsub(/\.java/, "Impl.java", $1); print o ":" $1 }' \
 ); do
   # Split out each list entry into the interface file name, declaration line
   # number, and implementation file name.
@@ -75,7 +75,7 @@ counter=0
 
 # Iterate over all generated enums and add a getter for the enum's name
 for file in $(grep -irn "enum" "${appPackageLocation}" | grep '.java' | grep -v 'Impl.java' | awk -F: '{ print $1 }' | sort -u); do
-  awk 'BEGIN {RS="enum" ; ORS = "enum"} {if ($0 ~ /private String name/) {print gensub(/}/, "  public String getValue(){ return name; } \n}", 2)} else {print}}' $file | sed 's/^enum$//g' > tmp.java
+  gawk 'BEGIN {RS="enum" ; ORS = "enum"} {if ($0 ~ /private String name/) {print gensub(/}/, "  public String getValue(){ return name; } \n}", 2)} else {print}}' $file | sed 's/^enum$//g' > tmp.java
   mv tmp.java $file
   counter=$(($counter+1))
 done
