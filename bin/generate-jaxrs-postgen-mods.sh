@@ -13,6 +13,9 @@ NAMES='[A-Za-z0-9_]'
 # File update counter
 counter=0
 
+# Try to use gawk if available, if not fall back to awk.
+AWK=$( command -v gawk || command -v awk || exit 1 );
+
 # Iterate over all files with a String typed _DISCRIMINATOR_TYPE_NAME.
 #
 # Then filter the list down to only java files.
@@ -21,7 +24,7 @@ counter=0
 # names.
 for pair in $(grep -irn 'String _DISCRIMINATOR_TYPE_NAME =' "${appPackageLocation}" \
   | grep '.java' \
-  | gawk '{ o = $1; gsub(/\.java/, "Impl.java", $1); print o ":" $1 }' \
+  | ${AWK} '{ o = $1; gsub(/\.java/, "Impl.java", $1); print o ":" $1 }' \
 ); do
   # Split out each list entry into the interface file name, declaration line
   # number, and implementation file name.
@@ -75,7 +78,7 @@ counter=0
 
 # Iterate over all generated enums and add a getter for the enum's name
 for file in $(grep -irn "enum" "${appPackageLocation}" | grep '.java' | grep -v 'Impl.java' | awk -F: '{ print $1 }' | sort -u); do
-  gawk 'BEGIN {RS="enum" ; ORS = "enum"} {if ($0 ~ /private String name/) {print gensub(/}/, "  public String getValue(){ return name; } \n}", 2)} else {print}}' $file | sed 's/^enum$//g' > tmp.java
+  ${AWK} 'BEGIN {RS="enum" ; ORS = "enum"} {if ($0 ~ /private String name/) {print gensub(/}/, "  public String getValue(){ return name; } \n}", 2)} else {print}}' $file | sed 's/^enum$//g' > tmp.java
   mv tmp.java $file
   counter=$(($counter+1))
 done
