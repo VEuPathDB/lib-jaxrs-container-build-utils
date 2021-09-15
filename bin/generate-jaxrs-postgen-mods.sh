@@ -83,4 +83,7 @@ for file in $(grep -irn "enum" "${appPackageLocation}" | grep '.java' | grep -v 
   counter=$(($counter+1))
 done
 
+# Replace all primitives in generated model types with boxed types
+find "${appPackageLocation}/model" -type f -name '*.java'  | xargs -I'{}' sed -ie 's/\b\(long\|double\|boolean\|byte\|char\|short\|float\)\b/\u\1/g;s/\bint\b/Integer/g' '{}'
+
 echo "  Modified $counter generated Java files to provide a getter for the enum's JSON value";
