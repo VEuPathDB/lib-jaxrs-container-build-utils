@@ -5,9 +5,8 @@ dir=$(pwd)
 
 echo "Cloning latest FgpUtil version"
 
-git clone --depth 1 https://github.com/VEuPathDB/FgpUtil || exit 1
+git clone --depth 1 https://github.com/VEuPathDB/FgpUtil --branch jersey-upgrade || exit 1
 cd FgpUtil
-git checkout jersey-upgrade
 
 echo "Building FgpUtil"
 
