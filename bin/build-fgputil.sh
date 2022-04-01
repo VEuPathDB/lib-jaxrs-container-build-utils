@@ -5,7 +5,7 @@ dir=$(pwd)
 
 echo "Cloning latest FgpUtil version"
 
-git clone --depth 1 https://github.com/VEuPathDB/FgpUtil || exit 1
+git clone --depth 1 https://github.com/VEuPathDB/FgpUtil --branch tomcat10 || exit 1
 cd FgpUtil
 
 echo "Building FgpUtil"
