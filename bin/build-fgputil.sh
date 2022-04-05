@@ -3,9 +3,11 @@
 docker=$1
 dir=$(pwd)
 
-echo "Cloning latest FgpUtil version"
+FGP_UTILS_BRANCH=${1:+master}
 
-git clone --depth 1 https://github.com/VEuPathDB/FgpUtil --branch tomcat10 || exit 1
+echo "Cloning latest FgpUtil from branch ${FGP_UTILS_BRANCH}"
+
+git clone --depth 1 https://github.com/VEuPathDB/FgpUtil --branch ${FGP_UTILS_BRANCH} || exit 1
 cd FgpUtil
 
 echo "Building FgpUtil"
