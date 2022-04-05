@@ -4,10 +4,10 @@ dir=$(pwd)
 
 FGP_UTILS_HASH=${1:-master}
 
-echo "Cloning latest FgpUtil from branch ${FGP_UTILS_HASH}"
+echo "Cloning latest FgpUtil and switching to ${FGP_UTILS_HASH}"
 
-git clone https://github.com/VEuPathDB/FgpUtil --branch ${FGP_UTILS_HASH} || exit 1
-cd FgpUtil
+git clone https://github.com/VEuPathDB/FgpUtil || exit 1
+cd FgpUtil && git checkout ${FGP_UTILS_HASH}
 
 echo "Building FgpUtil"
 
