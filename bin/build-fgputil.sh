@@ -3,12 +3,12 @@
 docker=$1
 dir=$(pwd)
 
-FGP_UTILS_BRANCH=${1:-master}
+FGP_UTILS_HASH=${1:-master}
 
-echo "Cloning latest FgpUtil from branch ${FGP_UTILS_BRANCH}"
+echo "Cloning latest FgpUtil from ${FGP_UTILS_HASH}"
 
-git clone --depth 1 https://github.com/VEuPathDB/FgpUtil --branch ${FGP_UTILS_BRANCH} || exit 1
-cd FgpUtil
+git clone --depth 1 https://github.com/VEuPathDB/FgpUtil || exit 1
+cd FgpUtil && git checkout ${FGP_UTILS_HASH}
 
 echo "Building FgpUtil"
 
