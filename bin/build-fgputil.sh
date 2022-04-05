@@ -1,12 +1,13 @@
 #!/usr/bin/env sh
 
-docker=$1
 dir=$(pwd)
 
-echo "Cloning latest FgpUtil version"
+FGP_UTILS_HASH=${1:-master}
 
-git clone --depth 1 https://github.com/VEuPathDB/FgpUtil || exit 1
-cd FgpUtil
+echo "Cloning latest FgpUtil and switching to ${FGP_UTILS_HASH}"
+
+git clone https://github.com/VEuPathDB/FgpUtil || exit 1
+cd FgpUtil && git checkout ${FGP_UTILS_HASH}
 
 echo "Building FgpUtil"
 
