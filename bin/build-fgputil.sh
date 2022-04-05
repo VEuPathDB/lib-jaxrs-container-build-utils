@@ -3,7 +3,7 @@
 docker=$1
 dir=$(pwd)
 
-FGP_UTILS_BRANCH=${1:+master}
+FGP_UTILS_BRANCH=${1:-master}
 
 echo "Cloning latest FgpUtil from branch ${FGP_UTILS_BRANCH}"
 

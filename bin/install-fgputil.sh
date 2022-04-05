@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-FGP_UTILS_BRANCH=${1:+master}
+FGP_UTILS_BRANCH=${1:-master}
 
 . .tools/bin/lib/colors.sh
 readonly LIBS="vendor/fgputil-accountdb-1.0.0.jar
