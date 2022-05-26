@@ -88,3 +88,6 @@ find "${appPackageLocation}/model" -type f -name '*.java' | xargs -I'{}' sed -i 
 find "${appPackageLocation}/resources" -type f -name '*.java' | grep -v "Api.java" | grep -v "Health.java" | grep -v "Metrics.java" | xargs -I'{}' sed -i 's/\b\(long\|double\|boolean\|byte\|short\|float\)\b/\u\1/g;s/\bint\b/Integer/g' '{}'
 
 echo "  Modified $counter generated Java files to provide a getter for the enum's JSON value";
+
+# Convert javax.ws to jakarta.ws in generated classes
+grep -Rl "javax\.ws" src | xargs -I{} sed -i 's/javax\.ws/jakarta\.ws/g' {}
