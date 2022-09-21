@@ -12,7 +12,7 @@ getLatestVersionData() {
     kill -s TERM ${TOP_PID}
   fi
 
-  if ! curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/${1}/releases/latest" | jq '.["tag_name"]'; then
+  if ! curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/${1}/releases/latest" | jq -r '.["tag_name"]'; then
     echo "Failed to fetch version information for ${1}" >&2
     kill -s TERM ${TOP_PID}
   fi
@@ -31,8 +31,8 @@ parseReleaseFile() {
     echo "function parseReleaseFile called without required project release data." >&2
     kill -s TERM ${TOP_PID}
   fi
-
-  curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/${1}/releases/latest" | jq '.assets | .[] | .browser_download_url' | grep "$(os)"
+  # curl GitHub endpoint and parse JSON using jq -r for raw output excluding quotes.
+  curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/${1}/releases/latest" | jq -r '.assets | .[] | .browser_download_url' | grep "$(os)"
 }
 
 os() {
@@ -88,7 +88,7 @@ downloadIfDifferent() {
   fi
 
   echo "Downloading ${fileUrl}" \
-    && curl -s -L "${fileUrl}" > "${CUR_PATH}/tmp.tar.gz" \
+    && curl -s -L ${fileUrl} -o "${CUR_PATH}/tmp.tar.gz" \
     && echo "Extracting ${CUR_PATH}/tmp.tar.gz" \
     && tar -xf "${CUR_PATH}/tmp.tar.gz" -C ${CUR_PATH} 2>&1 \
     && echo "Cleaning up" \
