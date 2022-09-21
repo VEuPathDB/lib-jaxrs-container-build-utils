@@ -3,20 +3,6 @@ trap "exit 1" TERM
 export TOP_PID=$$
 
 readonly CUR_PATH="$(pwd)/.tools/bin"
-readonly TOOL="${CUR_PATH}/gh-latest"
-
-getTool() {
-  if [ ! -f "${TOOL}" ]; then
-    file="${CUR_PATH}/tmp.tar.gz"
-
-    (echo "Downloading gh-latest" \
-      && curl -s -L "https://github.com/Foxcapades/gh-latest/releases/download/v1.0.4/gh-latest-$(os).v1.0.4.tar.gz" > "${file}" \
-      && echo "Extracting ${file}" \
-      && tar -xzf "${file}" -C "${CUR_PATH}" 2>&1 \
-      && echo "Cleaning up" \
-      && rm "${file}" 2>&1) || kill -s TERM ${TOP_PID}
-  fi
-}
 
 getLatestVersionData() {
   if [ -z "${1}" ]; then
@@ -25,19 +11,27 @@ getLatestVersionData() {
     kill -s TERM ${TOP_PID}
   fi
 
-  if ! "${TOOL}" -t "${1}"; then
+  if ! curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/${1}/releases/latest" | jq -r '.["tag_name"]'; then
     echo "Failed to fetch version information for ${1}" >&2
     kill -s TERM ${TOP_PID}
   fi
 }
 
+#######################################
+# Fetches the release file URL for the given repository
+# Arguments:
+#   $1: GitHub repo in form <OWNER>/<REPO>
+#   $2: Version of currently downloaded release from repo specified in first arg
+# Outputs:
+#   Version tag of the latest release of the repo in GitHub.
+#######################################
 parseReleaseFile() {
   if [ -z "${1}" ]; then
     echo "function parseReleaseFile called without required project release data." >&2
     kill -s TERM ${TOP_PID}
   fi
-
-  "${TOOL}" -u "${1}" | grep "$(os)"
+  # curl GitHub endpoint and parse JSON using jq -r for raw output excluding quotes.
+  curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/${1}/releases/latest" | jq -r '.assets | .[] | .browser_download_url' | grep "$(os)"
 }
 
 os() {
@@ -66,6 +60,14 @@ versionEquals() {
   return 1
 }
 
+#######################################
+# Download the latest release of a specified repo if the latest version is newer than the currently downloaded version.
+# Arguments:
+#   $1: GitHub repo in form <OWNER>/<REPO>
+#   $2: Version of currently downloaded release from repo specified in first arg
+# Outputs:
+#   Writes unstructured logs to stdout
+#######################################
 downloadIfDifferent() {
   if [ -z "${1}" ] || [ -z "${2}" ]; then
     echo "function downloadIfDifferent must be passed a github project slug and a version number to check against" >&2
@@ -85,12 +87,11 @@ downloadIfDifferent() {
   fi
 
   echo "Downloading ${fileUrl}" \
-    && curl -s -L "${fileUrl}" > "${CUR_PATH}/tmp.tar.gz" \
+    && curl -s -L ${fileUrl} -o "${CUR_PATH}/tmp.tar.gz" \
     && echo "Extracting ${CUR_PATH}/tmp.tar.gz" \
     && tar -xf "${CUR_PATH}/tmp.tar.gz" -C ${CUR_PATH} 2>&1 \
     && echo "Cleaning up" \
     && rm "${CUR_PATH}/tmp.tar.gz"
 }
 
-getTool
 downloadIfDifferent "${1:?Package Name}" "${2:-"-1"}"
