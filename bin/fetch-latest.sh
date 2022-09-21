@@ -3,7 +3,6 @@ trap "exit 1" TERM
 export TOP_PID=$$
 
 readonly CUR_PATH="$(pwd)/.tools/bin"
-readonly TOOL="${CUR_PATH}/gh-latest"
 
 getLatestVersionData() {
   if [ -z "${1}" ]; then
