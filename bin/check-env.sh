@@ -17,6 +17,11 @@ if ! command -v mvn > /dev/null; then
   OK=false
 fi
 
+if ! command -v jq > /dev/null; then
+  echo "  ${ERROR}jq is not installed. Please install it and try again or build in Docker."
+  OK=false
+fiR
+
 if ! command -v docker > /dev/null; then
   echo "  ${WARN}Docker is not installed.  The command 'make docker' will not work."
 fi
