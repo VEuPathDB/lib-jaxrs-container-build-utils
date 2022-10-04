@@ -1,6 +1,9 @@
 = JaxRS Container Service Build Utilities
 :github-base: https://github.com/VEuPathDB
 
+This repository has been archived as the functionality has been incorporated
+into the {github-base}/lib-gradle-container-utils[Container Build Gradle Plugin]
+
 This repo provides a temporary set of utilities used in the construction of
 JaxRS based containerized services.
 
